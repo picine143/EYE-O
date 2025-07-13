@@ -23,7 +23,7 @@ def toggle_start_Stop():
         MainButton.config(text="Stop")
         isStarted = True
         print(choiceMade)
-        threading.Thread(target=start_blink_detection(choiceMade), daemon=True).start()
+        threading.Thread(target=start_blink_detection,args=(choiceMade,), daemon=True).start()
 
 # Create main window
 root = tk.Tk()
