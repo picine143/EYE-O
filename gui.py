@@ -16,7 +16,6 @@ def toggle_start_Stop():
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
         isStarted = False
-        print(choiceMade)
         stop_blink_detection(choiceMade)
 
     else:

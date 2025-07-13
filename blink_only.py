@@ -8,6 +8,7 @@ import time
 running = False  # Global flag to control loop
 
 def start_blink_detection():
+    global choiceMade
     global running
     running = True
 
@@ -54,16 +55,21 @@ def start_blink_detection():
 
                 if avgEAR < EAR_THRESHOLD:
                     blink_count += 1
-                else:
+                else:                     
                     if blink_count >= BLINK_FRAMES:
-                        now = time.time()
-                        if now - last_blink_time <= DOUBLE_BLINK_GAP:
-                            print("DOUBLE BLINK detected → SPACE")
+                        if choiceMade == "Single Blink":
+                            print("SINGLE BLINK detected → SPACE")
                             keyboard.press(Key.space)
                             keyboard.release(Key.space)
-                            last_blink_time = 0
-                        else:
-                            last_blink_time = now
+                        elif choiceMade == "Double Blink":
+                            now = time.time()
+                            if now - last_blink_time <= DOUBLE_BLINK_GAP:
+                                print("DOUBLE BLINK detected → SPACE")
+                                keyboard.press(Key.space)
+                                keyboard.release(Key.space)
+                                last_blink_time = 0
+                            else:
+                                last_blink_time = now
                     blink_count = 0
             else:
                 print("No face detected.", end='\r')
@@ -81,5 +87,4 @@ def stop_blink_detection(choice):
     global running
     global choiceMade 
     choiceMade = choice
-    print(choiceMade)
     running = False
