@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.ttk import Combobox
+from blink_only import *
 
 # Global state
 isStarted = False  # This will persist across button clicks
@@ -10,11 +11,15 @@ def toggle_start_Stop():
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
         isStarted = False
+        start_blink_detection(isStarted)
         
     else:
         runningStatus.config(text="Running", fg="green")
         MainButton.config(text="Stop")
         isStarted = True
+        start_blink_detection(isStarted)
+            
+        
 
 # Create main window
 root = tk.Tk()
