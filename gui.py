@@ -8,12 +8,13 @@ isStarted = False
 
 def toggle_start_Stop():
     global isStarted
+    global choiceMade
 
     if isStarted:
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
         isStarted = False
-        stop_blink_detection()
+        stop_blink_detection(choiceMade.get())
 
     else:
         runningStatus.config(text="Running", fg="green")
@@ -47,7 +48,8 @@ sliderRef.pack(pady=10)
 jumpChoiceLabel = tk.Label(root, text="Jump Action:")
 jumpChoiceLabel.pack()
 jumpChoice = Combobox(root, values=["Single Blink", "Double Blink"], state="readonly", width=20)
-jumpChoice.current(1)
+choiceMade = jumpChoice.current(1)
+
 jumpChoice.pack(pady=10)
 
 root.mainloop()

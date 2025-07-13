@@ -76,6 +76,13 @@ def start_blink_detection():
     cap.release()
     cv2.destroyAllWindows()
 
-def stop_blink_detection():
+def stop_blink_detection(choice):
     global running
+    if choice == "Single Blink":
+        print("Stopping single blink detection.")
+    elif choice == "Double Blink":
+        print("Stopping double blink detection.")
+    else:
+        print("Stopping blink detection.")
+        
     running = False
