@@ -9,8 +9,9 @@ isStarted = False
 
 def toggle_start_Stop():
     global isStarted
-    global choiceMade
+    global jumpChoice
 
+    choiceMade = jumpChoice.get()
     if isStarted:
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
@@ -53,7 +54,7 @@ jumpChoiceLabel.pack()
 jumpChoice = Combobox(root, values=["Single Blink", "Double Blink"], state="readonly", width=20,)
 
 jumpChoice.current(1)
-choiceMade = jumpChoice.get()
+
 
 
 jumpChoice.pack(pady=10)
