@@ -5,11 +5,12 @@ from pynput.keyboard import Controller, Key
 import traceback
 import time
 
-running = False  # Global flag to control loop
+# Shared state
+running = False
+choiceMade = "Double Blink"  # Default mode
 
 def start_blink_detection():
-    global choiceMade
-    global running
+    global running, choiceMade
     running = True
 
     EAR_THRESHOLD    = 0.28
@@ -38,7 +39,6 @@ def start_blink_detection():
 
     while running:
         ret, frame = cap.read()
-        
         if not ret:
             continue
 
@@ -55,16 +55,18 @@ def start_blink_detection():
 
                 if avgEAR < EAR_THRESHOLD:
                     blink_count += 1
-                else:                     
+                else:
                     if blink_count >= BLINK_FRAMES:
+                        now = time.time()
+                        
                         if choiceMade == "Single Blink":
-                            print("SINGLE BLINK detected → SPACE")
+                            print("SINGLE BLINK → SPACE")
                             keyboard.press(Key.space)
                             keyboard.release(Key.space)
+
                         elif choiceMade == "Double Blink":
-                            now = time.time()
                             if now - last_blink_time <= DOUBLE_BLINK_GAP:
-                                print("DOUBLE BLINK detected → SPACE")
+                                print("DOUBLE BLINK → SPACE")
                                 keyboard.press(Key.space)
                                 keyboard.release(Key.space)
                                 last_blink_time = 0
@@ -72,7 +74,7 @@ def start_blink_detection():
                                 last_blink_time = now
                     blink_count = 0
             else:
-                print("No face detected.", end='\r')
+                print("No face detected.", end="\r")
 
         except Exception as e:
             traceback.print_exc()
@@ -83,8 +85,9 @@ def start_blink_detection():
     cap.release()
     cv2.destroyAllWindows()
 
-def stop_blink_detection(choice):
-    global running
-    global choiceMade 
-    choiceMade = choice
+def stop_blink_detection(choice=None):
+    """Stop loop and optionally update the blink mode."""
+    global running, choiceMade
+    if choice:
+        choiceMade = choice
     running = False
