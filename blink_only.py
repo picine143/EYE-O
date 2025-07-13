@@ -36,7 +36,7 @@ def start_blink_detection(choice):
 
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("ERROR: Cannot open webcam.")
+        # print("ERROR: Cannot open webcam.")
         return
 
     while running:
@@ -62,21 +62,21 @@ def start_blink_detection(choice):
                         now = time.time()
                         
                         if choiceMade == "Single Blink":
-                            print("SINGLE BLINK → SPACE")
+                            # print("SINGLE BLINK → SPACE")
                             keyboard.press(Key.space)
                             keyboard.release(Key.space)
 
                         elif choiceMade == "Double Blink":
                             if now - last_blink_time <= DOUBLE_BLINK_GAP:
-                                print("DOUBLE BLINK → SPACE")
+                                # print("DOUBLE BLINK → SPACE")
                                 keyboard.press(Key.space)
                                 keyboard.release(Key.space)
                                 last_blink_time = 0
                             else:
                                 last_blink_time = now
                     blink_count = 0
-            else:
-                print("No face detected.", end="\r")
+            # else:
+                # print("No face detected.", end="\r")
 
         except Exception as e:
             traceback.print_exc()

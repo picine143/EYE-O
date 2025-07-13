@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter.ttk import Combobox
 import threading
-from blink_only import start_blink_detection, stop_blink_detection
-
+from mixed import start_combined_detection , stop_combined_detection, calibrate_nose
 # Global state
 isStarted = False
 
@@ -10,20 +9,27 @@ isStarted = False
 def toggle_start_Stop():
     global isStarted
     global jumpChoice
+    global sliderValue
+    global sliderBack
 
     choiceMade = jumpChoice.get()
+    sliderValue = 50 - sliderSens.get() / 2
+    slideBack =  sliderRef.get() / 100
+
     if isStarted:
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
         isStarted = False
-        stop_blink_detection(choiceMade)
+        stop_combined_detection()
 
     else:
         runningStatus.config(text="Running", fg="green")
         MainButton.config(text="Stop")
         isStarted = True
         print(choiceMade)
-        threading.Thread(target=start_blink_detection,args=(choiceMade,), daemon=True).start()
+        threading.Thread(target=start_combined_detection,args=(choiceMade, sliderValue, slideBack), daemon=True).start()
+        
+
 
 # Create main window
 root = tk.Tk()
@@ -43,10 +49,17 @@ MainButton.pack(pady=10)
 runningStatus = tk.Label(root, text="Not Running", font=("Arial", 12), fg="red")
 runningStatus.pack()
 
-sliderSens = tk.Scale(root, from_=0, to=100, orient=tk.HORIZONTAL, label="Sensitivity", length=200)
-sliderRef = tk.Scale(root, from_=0, to=100, orient=tk.HORIZONTAL, label="Refresh Rate", length=200)
+sliderSens = tk.Scale(root, from_=0, to=100, orient=tk.HORIZONTAL, label="Sensitivity", length=200 , variable=tk.IntVar(value=70))
+
+sliderRef = tk.Scale(root, from_=0, to=100, orient=tk.HORIZONTAL, label="Cooldown", length=200, variable=tk.IntVar(value=50))
 sliderSens.pack(pady=10)
-sliderRef.pack(pady=10)
+sliderRef.pack(pady=10 )
+
+cal_label = tk.Label(root, text="Calibration will only work after\n starting the application",fg="blue", font=("Arial", 12))
+cal_label.pack(pady=10)
+calibrateBtn = tk.Button(root, text="Calibrate",command=calibrate_nose, font=("Arial", 12))
+calibrateBtn.pack(pady=10)
+
 
 jumpChoiceLabel = tk.Label(root, text="Jump Action:")
 jumpChoiceLabel.pack()
