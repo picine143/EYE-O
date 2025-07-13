@@ -84,6 +84,5 @@ def stop_blink_detection(choice):
         print("Stopping double blink detection.")
     else:
         print("Stopping blink detection.")
-        # This is just a placeholder for any additional cleanup if needed.s
         
     running = False
