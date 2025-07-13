@@ -37,7 +37,7 @@ def start_blink_detection():
 
     while running:
         ret, frame = cap.read()
-        print(choiceMade)
+        
         if not ret:
             continue
 
@@ -81,4 +81,5 @@ def stop_blink_detection(choice):
     global running
     global choiceMade 
     choiceMade = choice
+    print(choiceMade)
     running = False

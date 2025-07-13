@@ -6,6 +6,7 @@ from blink_only import start_blink_detection, stop_blink_detection
 # Global state
 isStarted = False
 
+
 def toggle_start_Stop():
     global isStarted
     global choiceMade
@@ -14,12 +15,14 @@ def toggle_start_Stop():
         runningStatus.config(text="Not Running", fg="red")
         MainButton.config(text="Start")
         isStarted = False
+        print(choiceMade)
         stop_blink_detection(choiceMade)
 
     else:
         runningStatus.config(text="Running", fg="green")
         MainButton.config(text="Stop")
         isStarted = True
+        print(choiceMade)
         threading.Thread(target=start_blink_detection, daemon=True).start()
 
 # Create main window
@@ -47,8 +50,11 @@ sliderRef.pack(pady=10)
 
 jumpChoiceLabel = tk.Label(root, text="Jump Action:")
 jumpChoiceLabel.pack()
-jumpChoice = Combobox(root, values=["Single Blink", "Double Blink"], state="readonly", width=20)
-choiceMade = jumpChoice.current(1)
+jumpChoice = Combobox(root, values=["Single Blink", "Double Blink"], state="readonly", width=20,)
+
+jumpChoice.current(1)
+choiceMade = jumpChoice.get()
+
 
 jumpChoice.pack(pady=10)
 
