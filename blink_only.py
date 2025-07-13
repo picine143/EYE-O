@@ -37,6 +37,7 @@ def start_blink_detection():
 
     while running:
         ret, frame = cap.read()
+        print(choiceMade)
         if not ret:
             continue
 
@@ -78,11 +79,6 @@ def start_blink_detection():
 
 def stop_blink_detection(choice):
     global running
-    if choice == "Single Blink":
-        print("Stopping single blink detection.")
-    elif choice == "Double Blink":
-        print("Stopping double blink detection.")
-    else:
-        print("Stopping blink detection.")
-        
+    global choiceMade 
+    choiceMade = choice
     running = False
