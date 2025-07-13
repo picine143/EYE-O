@@ -48,7 +48,7 @@ def start_blink_detection(isStarted):
 
         try:
             results = face_mesh.process(rgb)
-            if results.multi_face_landmarks:
+            if results.multi_face_landmarks and isStarted:
                 lm1 = results.multi_face_landmarks[0].landmark
 
                 # get eye points
@@ -80,13 +80,13 @@ def start_blink_detection(isStarted):
                     blink_count1 = 0
 
                 #draw mesh
-                mp_drawing.draw_landmarks(
+                """ mp_drawing.draw_landmarks(
                     frame,           
                     results.multi_face_landmarks[0],
                     mp_face_mesh.FACEMESH_TESSELATION,
                     landmark_drawing_spec=None,
                     connection_drawing_spec=mp_drawing.DrawingSpec((0,255,0),1,1)
-                )
+                ) """
 
                 
             else:
@@ -96,10 +96,10 @@ def start_blink_detection(isStarted):
             #print("Processing error:", e)
             traceback.print_exc()
 
-        cv2.imshow("Blink Test", frame)
+        """ cv2.imshow("Blink Test", frame) """
         if isStarted == False :  # ESC
             break      
 
-    cap.release()
+"""     cap.release()
     cv2.destroyAllWindows()        
-            
+             """
