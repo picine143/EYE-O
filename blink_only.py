@@ -9,8 +9,10 @@ import time
 running = False
 choiceMade = "Double Blink"  # Default mode
 
-def start_blink_detection():
+def start_blink_detection(choice):
     global running, choiceMade
+    if choice:
+        choiceMade = choice
     running = True
 
     EAR_THRESHOLD    = 0.28
