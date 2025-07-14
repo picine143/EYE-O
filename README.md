@@ -5,7 +5,7 @@ run
 
 >python gui.py
 
-##Key Mappings
+## Key Mappings
 > Double Blink - SPACEBAR
 >
 > Right Head turn - RIGHT ARROW
